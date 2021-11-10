@@ -40,7 +40,7 @@ class Department(models.Model):
     d_head_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.d_name
+        return str(self.ap_id) + ' ' + str(self.d_name)
 
 
 class Employee(models.Model):

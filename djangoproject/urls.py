@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('airflow/', include('airflow.urls')),
+    path('', include('airflow.urls')),
     path('admin/', admin.site.urls),
 ]
