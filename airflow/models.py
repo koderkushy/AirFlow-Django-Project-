@@ -11,6 +11,9 @@ class AirCraft(models.Model):
     a_status = models.IntegerField(blank=False, choices=a_stat_list, default=0)
     remarks = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Flight(models.Model):
     a_id = models.ForeignKey('AirCraft', on_delete=models.CASCADE)
@@ -26,12 +29,18 @@ class Airport(models.Model):
     run_c = models.IntegerField()
     ap_m_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.city
+
 
 class Department(models.Model):
     ap_id = models.ForeignKey('Airport', on_delete=models.CASCADE)
     dept_list = [('A', 'Air traffic control'), ('M', 'Maintenance'), ('E', 'Emergency crew'), ('S', 'Security')]
     d_name = models.CharField(blank=False, choices=dept_list, max_length=1)
     d_head_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.d_name
 
 
 class Employee(models.Model):
@@ -40,12 +49,18 @@ class Employee(models.Model):
     d_id = models.ForeignKey('Department', blank=True, null=True, on_delete=models.CASCADE)
     super = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Passenger(models.Model):
     name = models.CharField(max_length=30)
     email = models.CharField(max_length=40)
     age = models.IntegerField()
     remarks = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Booking(models.Model):
