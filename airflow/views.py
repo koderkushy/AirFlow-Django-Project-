@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 def fetch_airports(request):
     airport_list = Airport.objects.get(ap_id=0)
-    return render(request, 'display.html', {'airport': airport_list})
+    return render(request, 'display_A.html', {'airport': airport_list})
 
 
 def func(request):
