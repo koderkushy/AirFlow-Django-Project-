@@ -17,6 +17,7 @@ class AirCraft(models.Model):
 
 class Flight(models.Model):
     a_id = models.ForeignKey('AirCraft', on_delete=models.CASCADE)
+    airline = models.CharField(max_length=30)
     path = (models.ForeignKey('Airport', on_delete=models.CASCADE), models.ForeignKey('Airport', on_delete=models.CASCADE))
     time = (models.DateTimeField(), models.DateTimeField())
     fare = models.IntegerField()
@@ -35,7 +36,7 @@ class Airport(models.Model):
 
 class Department(models.Model):
     ap_id = models.ForeignKey('Airport', on_delete=models.CASCADE)
-    dept_list = [('A', 'Air traffic control'), ('M', 'Maintenance'), ('E', 'Emergency crew'), ('S', 'Security')]
+    dept_list = [('A', 'Air traffic control'), ('S', 'Security')]
     d_name = models.CharField(blank=False, choices=dept_list, max_length=1)
     d_head_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
