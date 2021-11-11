@@ -12,17 +12,22 @@ class AirCraft(models.Model):
     remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Flight(models.Model):
-    a_id = models.ForeignKey('AirCraft', on_delete=models.CASCADE)
+    aircraft = models.ForeignKey('AirCraft', on_delete=models.CASCADE)
     airline = models.CharField(max_length=30, null=True)
-    path = (models.ForeignKey('Airport', on_delete=models.CASCADE), models.ForeignKey('Airport', on_delete=models.CASCADE))
-    time = (models.DateTimeField(), models.DateTimeField())
+    dep_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='dep_airport')
+    arr_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='arr_airport')
+    dep_time = models.DateTimeField()
+    arr_time = models.DateTimeField()
     fare = models.IntegerField()
     fl_stat_list = [('S', 'Scheduled'), ('A', 'Active'), ('L', 'Landed'), ('C', 'Cancelled')]
     fl_status = models.CharField(blank=False, choices=fl_stat_list, max_length=1, default='S')
+
+    def __str__(self):
+        return str(self.dep_airport)+' to '+str(self.arr_airport)+' at '+str(self.dep_time)
 
 
 class Airport(models.Model):
@@ -31,7 +36,7 @@ class Airport(models.Model):
     ap_m_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.city
+        return str(self.city)
 
 
 class Employee(models.Model):

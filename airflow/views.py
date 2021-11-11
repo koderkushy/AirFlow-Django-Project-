@@ -1,22 +1,34 @@
 from django.shortcuts import render
-from .models import *
 from .forms import *
 from django.http import HttpResponse
 
 # Create your views here.
 
 
-def fetch_airports(request):
-    airport_list = Airport.objects.get(ap_id=0)
-    return render(request, 'display_A.html', {'airport': airport_list})
+def is_valid(t):
+    return t != '' and t is not None
 
 
-def func(request):
+def flight_show(request):
+    qset = Flight.objects.all()
+    al_list = list(set([str(t.airline) for t in qset]))
     if request.method == 'POST':
-        form = FlightForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse('Done!')
+        return render(request, "flight_form.html", {'queryset': qset, 'a_ch': al_list})
     else:
-        form = FlightForm()
-        return render(request, 'PrintForm.html', {'form': form})
+        dep_ap = request.GET.get('dep_ap')
+        arr_ap = request.GET.get('arr_ap')
+        datetime_min = request.GET.get('datetime_min')
+        datetime_max = request.GET.get('datetime_max')
+        airline = request.GET.get('airline')
+        if is_valid(datetime_min):
+            qset = qset.filter(dep_time__gte=datetime_min)
+        if is_valid(datetime_max):
+            qset = qset.filter(arr_time__lte=datetime_max)
+        if is_valid(airline):
+            qset = qset.filter(airline__exact=airline)
+        if is_valid(dep_ap) and is_valid(arr_ap):
+            temp, qset = qset, []
+            for t in temp:
+                if str(t.dep_airport) == str(dep_ap) and str(t.arr_airport) == str(arr_ap):
+                    qset.append(t)
+        return render(request, "flight_form.html", {'queryset': qset, 'a_ch': al_list, 'len': len(qset)})
