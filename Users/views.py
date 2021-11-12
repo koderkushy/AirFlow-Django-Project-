@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
-
 # Create your views here.
+
+
 def register_page(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -12,14 +13,13 @@ def register_page(request):
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username already exists')
-                return redirect('/register')
+                return redirect('register')
             elif User.objects.filter(email=email).exists():
-                messages.info(request, 'Email already in use')
-                return redirect('/register')
+                messages.success(request, 'Email already in use')
+                return redirect('register')
             else:
                 user_new = User.objects.create(username=username, password=password1, email=email,
                                                first_name=first_name, last_name=last_name)
@@ -45,7 +45,6 @@ def login_page(request):
         else:
             messages.info(request, 'Invalid username or password')
             return redirect('/login')
-
     else:
         return render(request, 'users/login.html')
 

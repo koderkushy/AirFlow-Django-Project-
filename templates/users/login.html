@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<title>Login</title>
@@ -43,7 +43,7 @@
 		}
 		.login_btn:focus {
 			box-shadow: none !important;
-			outline: 0px !important;
+			outline: 0 !important;
 		}
 		.login_container {
 			padding: 0 2rem;
@@ -57,7 +57,7 @@
 		.input_user,
 		.input_pass:focus {
 			box-shadow: none !important;
-			outline: 0px !important;
+			outline: 0 !important;
 		}
         *{
   padding: 0;
@@ -67,7 +67,7 @@
   box-sizing: border-box;
 }
 body{
-  font-family: "Times New Roman";
+    font-family: "Times New Roman";
 }
 nav{
   font-family: montserrat;
@@ -190,13 +190,17 @@ section{
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" name="username" placeholder="username"><br>
+                            <label>
+                                <input type="text" name="username" placeholder="Username">
+                            </label><br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="password" name="password" placeholder="Enter password"><br>
+                            <label>
+                                <input type="password" name="password" placeholder="Password">
+                            </label><br>
 						</div>
                         <div>
                             {% if messages %}
