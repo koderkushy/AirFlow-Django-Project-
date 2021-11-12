@@ -13,7 +13,7 @@ def flight_show(request):
     qset = Flight.objects.all()
     al_list = list(set([str(t.airline) for t in qset]))
     if request.method == 'POST':
-        return render(request, "flight_form.html", {'queryset': qset, 'a_ch': al_list})
+        return render(request, "flight/flight_form.html", {'queryset': qset, 'a_ch': al_list})
     else:
         dep_ap = request.GET.get('dep_ap')
         arr_ap = request.GET.get('arr_ap')
@@ -27,8 +27,7 @@ def flight_show(request):
         if is_valid(airline):
             qset = qset.filter(airline__exact=airline)
         if is_valid(dep_ap) and is_valid(arr_ap):
-            temp, qset = qset, []
-            for t in temp:
-                if str(t.dep_airport) == str(dep_ap) and str(t.arr_airport) == str(arr_ap):
-                    qset.append(t)
-        return render(request, "flight_form.html", {'queryset': qset, 'a_ch': al_list, 'len': len(qset)})
+            qset = qset.filter(dep_airport__city__iexact=dep_ap)
+            qset = qset.filter(arr_airport__city__iexact=arr_ap)
+
+        return render(request, "flight/flight_form.html", {'queryset': qset, 'a_ch': al_list, 'len': len(qset)})
