@@ -176,13 +176,7 @@ section{
 		  <li><a href="/login">login</a></li>
 		</ul>
 	</nav>
-    {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><h3>{{ message }}</h3>></li>
-    {% endfor %}
-</ul>
-{% endif %}
+
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
@@ -209,32 +203,36 @@ section{
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="text" name="username" placeholder="username" required><br>
+							<input type="text" name="username" placeholder="Username" required><br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
 							</div>
-                            <label>
                                 <input type="email" name="email" placeholder="Email" required>
-                            </label><br>
+                            <br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-                            <label>
                                 <input type="password" name="password1" placeholder="Enter password" required>
-                            </label><br>
+                            <br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-                            <label>
                                 <input type="password" name="password2" placeholder="Re-enter password" required>
-                            </label><br>
+                            <br>
 						</div>
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
 				   		<div class="d-flex justify-content-center mt-3 login_container">
 				 			<input class="btn login_btn" type="submit" value="Create Account">
 				   		</div>
@@ -249,8 +247,5 @@ section{
 			</div>
 		</div>
 	</div>
-
-
-
 </body>
 </html>

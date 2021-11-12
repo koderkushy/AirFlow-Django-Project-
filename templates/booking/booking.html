@@ -123,6 +123,7 @@ section{
       {% if user.is_authenticated %}
         <li>Welcome, {{ user.first_name }}</li>
         <li><a href="/mybookings">my bookings</a></li>
+        <li><a href="/flights">flights</a></li>
         <li><a href="/logout">logout</a></li>
       {% else %}
         <li><a href="/login">login</a></li>
@@ -133,57 +134,26 @@ section{
     <main role="main" class="container">
     <br/>
 
-      <h3>Filter Flights</h3>
-      <form method="GET" action="../../flights/">
-        <div class="form-row">
-            <div class="form-group col-6">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="dep_ap" placeholder="From"/>
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group col-6">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="arr_ap" placeholder="To"/>
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                </div>
-            </div>
-        </div>
+      <h1>Flight Details</h1><br>
 
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="dep_time">Show departures after</label>
-            <input type="datetime-local" class="form-control" id="dep_time" name="datetime_min">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="arr_time">Show arrivals before</label>
-            <input type="datetime-local" class="form-control" id="arr_time" name="datetime_max">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="airline">Airline</label>
-            <select id="airline" class="form-control" name="airline">
-              {% for cat in a_ch %}
-              <option value="{{ cat }}">{{ cat }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-        <a href="/flights">
-            <button type="button" class="btn btn-outline-primary">
-                Reset Form
-            </button>
-        </a>
-      </form>
-      <hr/>
+
+        <h5>Airline<br></h5><h2>{{ flight.airline }} <br><br></h2>
+        <h5>Aircraft<br></h5><h2>{{ flight.aircraft.name }} <br><br></h2>
+        <h5>From<br></h5><h2>{{ flight.dep_airport }} <br><br></h2>
+        <h5>To<br></h5><h2>{{ flight.arr_airport }} <br><br></h2>
+        <h5>Departure time<br></h5><h2>{{ flight.dep_time }} <br><br></h2>
+        <h5>Arrival time<br></h5><h2>{{ flight.arr_time }} <br><br></h2>
+        <h5>Fare<br></h5><h2>{{ flight.fare }} <br><br></h2>
+
+        <form method="POST" action="/book/{{ flight.id }}">
+            <div class="form-group col-3">
+                <div class="input-group">
+                    {% csrf_token %}
+                    <input class="form-control border-right-0 border" type="number" name="seat_count" placeholder="Seats" required/>
+                    <button type="submit" class="btn btn-primary"> Book seats </button>
+                </div>
+            </div>
+        </form>
         <div>
             {% if messages %}
                 <ul class="messages">
@@ -191,35 +161,8 @@ section{
                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                     {% endfor %}
                 </ul>
-                <hr/>
             {% endif %}
         </div>
-      <div class="row">
-        <ul>
-          {% for flight in queryset %}
-            <li>
-              {{ flight.airline }}
-                <br/>
-              <span>Departure: {{ flight.dep_airport }}  {{ flight.dep_time }}</span>
-                <br/>
-              <span>Arrival: {{ flight.arr_airport }}  {{ flight.arr_time }}</span>
-                <br/>
-              <span>Fare: {{ flight.fare }}</span>
-              <span><a href="/book/{{ flight.id }}">
-                  Open
-              </a></span>
-            </li>
-            <hr />
-          {% endfor %}
-          {% if len == 0 %}
-            <li>
-                <span>
-                    Sorry, there are no flights available at the moment that match your search.
-                </span>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
     </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
 
 
@@ -48,19 +48,13 @@ class Employee(models.Model):
         return self.name
 
 
-class Passenger(models.Model):
-    name = models.CharField(max_length=30)
-    email = models.CharField(max_length=40)
-    remarks = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Booking(models.Model):
-    ps_id = models.ForeignKey('Passenger', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     fl_id = models.ForeignKey('Flight', on_delete=models.CASCADE)
     seat_n = models.IntegerField()
     total_fare = models.IntegerField()
     statuses = [(0, 'Confirmed'), (1, 'Pending')]
-    status = models.IntegerField(blank=False, choices=statuses, default=1)
+    status = models.IntegerField(blank=False, choices=statuses, default=0)
+
+    def __str__(self):
+        return str(self.user)+' '+str(self.fl_id.dep_airport)+' '+str(self.fl_id.arr_airport);

@@ -35,6 +35,7 @@
 		}
 
 		#form-title{
+
 		}
 		.login_btn {
 			width: 100%;
@@ -190,17 +191,15 @@ section{
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-                            <label>
-                                <input type="text" name="username" placeholder="Username">
-                            </label><br>
+                                <input type="text" name="username" placeholder="Username" required>
+                            <br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-                            <label>
-                                <input type="password" name="password" placeholder="Password">
-                            </label><br>
+                                <input type="password" name="password" placeholder="Password" required>
+                            <br>
 						</div>
                         <div>
                             {% if messages %}

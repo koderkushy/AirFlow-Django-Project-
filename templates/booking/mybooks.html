@@ -122,7 +122,7 @@ section{
       <ul>
       {% if user.is_authenticated %}
         <li>Welcome, {{ user.first_name }}</li>
-        <li><a href="/mybookings">my bookings</a></li>
+        <li><a href="/flights">flights</a></li>
         <li><a href="/logout">logout</a></li>
       {% else %}
         <li><a href="/login">login</a></li>
@@ -133,80 +133,20 @@ section{
     <main role="main" class="container">
     <br/>
 
-      <h3>Filter Flights</h3>
-      <form method="GET" action="../../flights/">
-        <div class="form-row">
-            <div class="form-group col-6">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="dep_ap" placeholder="From"/>
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group col-6">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="arr_ap" placeholder="To"/>
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="dep_time">Show departures after</label>
-            <input type="datetime-local" class="form-control" id="dep_time" name="datetime_min">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="arr_time">Show arrivals before</label>
-            <input type="datetime-local" class="form-control" id="arr_time" name="datetime_max">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="airline">Airline</label>
-            <select id="airline" class="form-control" name="airline">
-              {% for cat in a_ch %}
-              <option value="{{ cat }}">{{ cat }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-        <a href="/flights">
-            <button type="button" class="btn btn-outline-primary">
-                Reset Form
-            </button>
-        </a>
-      </form>
-      <hr/>
-        <div>
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                <hr/>
-            {% endif %}
-        </div>
       <div class="row">
         <ul>
-          {% for flight in queryset %}
+          {% for book in bookset %}
             <li>
-              {{ flight.airline }}
+              {{ book.fl_id.airline }}
                 <br/>
-              <span>Departure: {{ flight.dep_airport }}  {{ flight.dep_time }}</span>
+              <span>Departure: {{ book.fl_id.dep_airport }}  {{ book.fl_id.dep_time }}</span>
                 <br/>
-              <span>Arrival: {{ flight.arr_airport }}  {{ flight.arr_time }}</span>
+              <span>Arrival: {{ book.fl_id.arr_airport }}  {{ book.fl_id.arr_time }}</span>
                 <br/>
-              <span>Fare: {{ flight.fare }}</span>
-              <span><a href="/book/{{ flight.id }}">
-                  Open
+              <span>Seats: {{ book.seat_n }}</span>
+              <span>Total Fare: {{ book.total_fare }}</span>
+              <span><a href="/book/{{ book.fl_id_id }}">
+                  Open Flight
               </a></span>
             </li>
             <hr />
@@ -214,7 +154,7 @@ section{
           {% if len == 0 %}
             <li>
                 <span>
-                    Sorry, there are no flights available at the moment that match your search.
+                    You currently have zero bookings.
                 </span>
             </li>
           {% endif %}

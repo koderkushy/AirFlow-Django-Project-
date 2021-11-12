@@ -18,16 +18,16 @@ def register_page(request):
                 messages.info(request, 'Username already exists')
                 return redirect('register')
             elif User.objects.filter(email=email).exists():
-                messages.success(request, 'Email already in use')
+                messages.info(request, 'Email already in use')
                 return redirect('register')
             else:
-                user_new = User.objects.create(username=username, password=password1, email=email,
-                                               first_name=first_name, last_name=last_name)
+                user_new = User.objects.create_user(username=username, password=password1, email=email,
+                                                    first_name=first_name, last_name=last_name)
                 user_new.save()
                 print('user created')
                 return redirect('/login')
         else:
-            print('Password not matched')
+            messages.info(request, 'Passwords don\'t match')
             return redirect('/register')
 
     else:
