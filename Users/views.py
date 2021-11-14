@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from airflow.models import *
 
 # Create your views here.
 
 
 def register_page(request):
+    if request.user.is_authenticated:
+        messages.info(request, 'You\'re already logged in!')
+        return redirect('/flights')
+
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -16,16 +21,28 @@ def register_page(request):
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username already exists')
-                return redirect('register')
+                return redirect('/register')
             elif User.objects.filter(email=email).exists():
                 messages.info(request, 'Email already in use')
-                return redirect('register')
+                return redirect('/register')
             else:
-                user_new = User.objects.create_user(username=username, password=password1, email=email,
-                                                    first_name=first_name, last_name=last_name)
-                user_new.save()
-                print('user created')
-                return redirect('/login')
+                admin_key = request.POST['admin_key']
+                if admin_key != '':
+                    if len(AdminKey.objects.filter(a_key=admin_key)) > 0:
+                        user_new = User.objects.create_user(username=username, password=password1, email=email,
+                                                            first_name=first_name, last_name=last_name, is_staff=True)
+                        user_new.save()
+                        messages.info(request, 'Successfully registered')
+                        return redirect('/login')
+                    else:
+                        messages.info(request, 'Wrong admin key')
+                        return redirect('/register')
+                else:
+                    user_new = User.objects.create_user(username=username, password=password1, email=email,
+                                                        first_name=first_name, last_name=last_name)
+                    user_new.save()
+                    messages.info(request, 'Successfully registered')
+                    return redirect('/login')
         else:
             messages.info(request, 'Passwords don\'t match')
             return redirect('/register')
@@ -35,6 +52,10 @@ def register_page(request):
 
 
 def login_page(request):
+    if request.user.is_authenticated:
+        messages.info(request, 'You\'re already logged in!')
+        return redirect('/flights')
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

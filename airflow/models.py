@@ -17,7 +17,7 @@ class AirCraft(models.Model):
 
 class Flight(models.Model):
     aircraft = models.ForeignKey('AirCraft', on_delete=models.CASCADE)
-    airline = models.CharField(max_length=30, null=True)
+    airline = models.ForeignKey('Airline', on_delete=models.CASCADE)
     dep_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='dep_airport')
     arr_airport = models.ForeignKey('Airport', on_delete=models.CASCADE, related_name='arr_airport')
     dep_time = models.DateTimeField()
@@ -33,19 +33,9 @@ class Flight(models.Model):
 class Airport(models.Model):
     city = models.CharField(max_length=30)
     run_c = models.IntegerField()
-    ap_m_id = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.city)
-
-
-class Employee(models.Model):
-    name = models.CharField(max_length=30)
-    age = models.IntegerField()
-    super = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
 
 
 class Booking(models.Model):
@@ -58,3 +48,18 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.user)+' '+str(self.fl_id.dep_airport)+' '+str(self.fl_id.arr_airport);
+
+
+class AdminKey(models.Model):
+    a_key = models.CharField(max_length=20)
+
+
+class CongestionIndex(models.Model):
+    delta = models.DurationField()
+
+
+class Airline(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name

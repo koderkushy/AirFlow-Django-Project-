@@ -191,7 +191,7 @@ section{
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" name="first_name" placeholder="First name" required><br>
+							<input type="text" name="first_name" placeholder="First name*" required><br>
 						</div>
                         <div class="input-group mb-2">
 							<div class="input-group-append">
@@ -203,29 +203,36 @@ section{
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="text" name="username" placeholder="Username" required><br>
+							<input type="text" name="username" placeholder="Username*" required><br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
 							</div>
-                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="email" name="email" placeholder="Email*" required>
                             <br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-                                <input type="password" name="password1" placeholder="Enter password" required>
+                                <input type="password" name="password1" placeholder="Enter password*" required>
                             <br>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-                                <input type="password" name="password2" placeholder="Re-enter password" required>
+                                <input type="password" name="password2" placeholder="Re-enter password*" required>
                             <br>
 						</div>
+                        <div>
+                            <div class="input-group-append">
+								<span class="input-group-append">Enter admin key for staff account</span>
+							</div>
+                                <input type="password" name="admin_key" placeholder="Key">
+                            <br><br>
+                        </div>
                         {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}
