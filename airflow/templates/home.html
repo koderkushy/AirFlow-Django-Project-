@@ -1,0 +1,344 @@
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .user_card {
+        width: 350px;
+        margin-top: auto;
+        margin-bottom: auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+
+    }
+
+    .form_container {
+        margin-top: 20px;
+    }
+    .f{
+        width: 1524px;
+        height: 650px;
+        object-fit: cover;
+    }
+
+    #form-title{
+
+    }
+    .login_btn {
+        width: 100%;
+        background: #33ccff !important;
+        color: white !important;
+    }
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+    .login_container {
+        padding: 0 2rem;
+    }
+    .input-group-text {
+        background: #f7ba5b !important;
+        color: white !important;
+        border: 0 !important;
+        border-radius: 0.25rem 0 0 0.25rem !important;
+    }
+    .input_user,
+    .input_pass:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+    *{
+padding: 0;
+margin: 0;
+text-decoration: none;
+list-style: none;
+box-sizing: border-box;
+}
+body{
+font-family: "Times New Roman";
+}
+nav{
+font-family: montserrat;
+background: dodgerblue;
+height: 80px;
+width: 100%;
+}
+label.logo{
+color: white;
+font-size: 35px;
+line-height: 80px;
+padding: 0 50px;
+font-weight: bold;
+}
+nav ul{
+float: right;
+margin-right: 20px;
+}
+nav ul li{
+display: inline-block;
+line-height: 80px;
+margin: 0 5px;
+}
+nav ul li a{
+color: white;
+font-size: 17px;
+padding: 7px 13px;
+border-radius: 3px;
+text-transform: uppercase;
+}
+a.active,a:hover{
+background: #1b9bff;
+transition: .5s;
+}
+.checkbtn{
+font-size: 30px;
+color: white;
+float: right;
+line-height: 80px;
+margin-right: 40px;
+cursor: pointer;
+display: none;
+}
+#check{
+display: none;
+}
+ul {
+list-style-type: none;
+}
+@media (max-width: 952px){
+label.logo{
+font-size: 30px;
+padding-left: 50px;
+}
+nav ul li a{
+font-size: 16px;
+}
+}
+@media (max-width: 858px){
+.checkbtn{
+display: block;
+}
+ul{
+position: fixed;
+width: 100%;
+height: 100vh;
+background: #2c3e50;
+top: 80px;
+left: -100%;
+text-align: center;
+transition: all .5s;
+}
+nav ul li{
+display: block;
+margin: 50px 0;
+line-height: 30px;
+}
+nav ul li a{
+font-size: 20px;
+}
+a:hover,a.active{
+background: none;
+color: #0082e6;
+}
+#check:checked ~ ul{
+left: 0;
+}
+}
+section{
+background-size: cover;
+height: calc(100vh - 80px);
+}
+/* REMOVE THIS, USE YOUR OWN  */
+html,body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial";
+  background-color: #070617;
+}
+.dummy_page {
+  height: 200px;
+  width: 100%;
+  background-color: #f0f0f0;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 60px 0px;
+}
+/* STYLES SPECIFIC TO FOOTER  */
+.footer {
+  width: 100%;
+  position: relative;
+  height: auto;
+  background-color: #070617;
+}
+
+.footer  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: #999999;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 0px 5px 0px;
+  cursor: pointer;
+  transition: .2s;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  text-align: center;
+}
+.footer .col ul li {
+  color: #999999;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 0px 5px 0px;
+  cursor: pointer;
+  transition: .2s;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+}
+
+@media only screen and (min-width: 1280px) {
+  .contain {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+@media only screen and (max-width: 1139px) {
+  .contain .social {
+    width: 1000px;
+    display: block;
+  }
+  .social h1 {
+    margin: 0px;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .footer .col {
+    width: 33%;
+  }
+  .footer .col h1 {
+    font-size: 14px;
+  }
+  .footer .col ul li {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 500px) {
+    .footer .col {
+      width: 50%;
+    }
+    .footer .col h1 {
+      font-size: 14px;
+    }
+    .footer .col ul li {
+      font-size: 13px;
+    }
+}
+@media only screen and (max-width: 340px) {
+  .footer .col {
+    width: 100%;
+  }
+}
+    /* Container holding the image and the text */
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  font-family: "Times New Roman";
+  color: black;
+  position: absolute;
+  text-align: left;
+  max-width: 600px;
+  top: 5%;
+  left: 6%;
+}
+
+/* Top right text */
+.top-right {
+  font-family: "Times New Roman";
+  color: black;
+  position: absolute;
+  top: 30px;
+  right: 200px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+{% load static %}
+<html>
+    <title>
+        Home
+    </title>
+    <body>
+        <nav>
+            <label class="logo">AirFlow</label>
+            <ul>
+              {% if user.is_authenticated %}
+                <li>Welcome, {{ user.first_name }}</li>
+              {% endif %}
+                <li><a href="/flights">flights</a></li>
+              {% if user.is_authenticated %}
+                  {% if user.is_staff %}
+                      <li><a href="/add_flight">Add Flight</a></li>
+                  {% endif %}
+                <li><a href="/mybookings">my bookings</a></li>
+                <li><a href="/logout">logout</a></li>
+              {% else %}
+                <li><a href="/login">login</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        <div class="container">
+          <img class="f" src="{% static 'img1.jpg' %}" alt="airplane" >
+            <div class="top-left">
+                <h1>Welcome</h1><br>
+                <h3>AirFlow is an airport database management system.</h3><br>
+                <h3>Users must create Passenger/Staff accounts to access the database.</h3><br>
+                <h3>One can book flights and view their bookings using a simplified portal.</h3><br>
+                <h3>Staff users may add flights to the network conveniently as the database manages flight congestion at the connecting airports.</h3><br>
+                <h3>DB transactions are fail-proof and privacy is guaranteed.</h3>
+            </div>
+        </div>
+    </body>
+    <div class="footer">
+        <br>
+      <ul>&emsp;&emsp;&emsp;Creators:<br>
+        Mohammad Anas Khan  &emsp; &emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp; Kushagra Goel<br>
+        mohammad.anaskhan.cse20@iitbhu.ac.in&emsp;&emsp; kushagra.goel.cse20@iitbhu.ac.in <br><br><br>
+      </ul>
+    </div>
+</html>

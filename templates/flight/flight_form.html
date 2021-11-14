@@ -17,6 +17,7 @@
 }
 body{
   font-family: "Times New Roman";
+  background: paleturquoise;
 }
 nav{
   font-family: montserrat;
@@ -124,6 +125,9 @@ section{
       <ul>
       {% if user.is_authenticated %}
         <li>Welcome, {{ user.first_name }}</li>
+      {% endif %}
+      <li><a href="/">Home</a></li>
+      {% if user.is_authenticated %}
           {% if user.is_staff %}
               <li><a href="/add_flight">Add Flight</a></li>
           {% endif %}

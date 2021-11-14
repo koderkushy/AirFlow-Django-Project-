@@ -14,7 +14,7 @@ def is_valid(t):
 
 
 def home_page(request):
-    pass
+    return render(request, 'home.html')
 
 
 def is_congested(ap, active_at):
