@@ -21,8 +21,8 @@ def is_congested(ap, active_at):
     delta = random.choice(list(CongestionIndex.objects.all())).delta
     # CongestionIndex table must have only one item at all times
 
-    dep_list = Flight.objects.filter(dep_airport__city=ap)
-    arr_list = Flight.objects.filter(arr_airport__city=ap)
+    dep_list = Flight.objects.select_for_update().filter(dep_airport__city=ap)
+    arr_list = Flight.objects.select_for_update().filter(arr_airport__city=ap)
 
     count = 0
     print(delta)
@@ -45,7 +45,7 @@ def is_congested(ap, active_at):
 
 @transaction.atomic
 def flight_show(request):
-    query_set = Flight.objects.filter(fl_status='S')
+    query_set = Flight.objects.order_by('fare').filter(fl_status='S')
     al_list = ['']+list(Airline.objects.all())
     ap_list = ['']+list(Airport.objects.all())
 
@@ -62,13 +62,16 @@ def flight_show(request):
         query_set = query_set.filter(arr_time__lte=datetime_max)
 
     if is_valid(airline):
-        query_set = query_set.filter(airline__exact=airline)
+        query_set = query_set.filter(airline__name__exact=airline)
 
     if is_valid(dep_ap) and is_valid(arr_ap):
         query_set = query_set.filter(dep_airport__city__iexact=dep_ap)
         query_set = query_set.filter(arr_airport__city__iexact=arr_ap)
 
-    return render(request, "flight/flight_form.html", {'queryset': query_set, 'a_ch': al_list, 'ap_ch': ap_list, 'len': len(query_set)})
+    return render(request, "flight/flight_form.html", {'queryset': query_set,
+                                                       'a_ch': al_list,
+                                                       'ap_ch': ap_list,
+                                                       'len': len(query_set)})
 
 
 @transaction.atomic
@@ -84,7 +87,7 @@ def book_flight(request, flight_id):
         required_seats = int(request.POST['seat_count'])
         occupied_seats = 0
 
-        for t in Booking.objects.filter(fl_id=flight_id):
+        for t in Booking.objects.select_for_update().filter(fl_id=flight_id):
             occupied_seats += int(t.seat_n)
 
         if occupied_seats + required_seats > cur.aircraft.seats:
