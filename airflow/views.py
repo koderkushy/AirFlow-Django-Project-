@@ -55,6 +55,13 @@ def flight_show(request):
     datetime_max = request.GET.get('datetime_max')
     airline = request.GET.get('airline')
 
+    if dep_ap == arr_ap:
+        messages.info(request, 'Select distinct connecting airports')
+        return render(request, "flight/flight_form.html", {'queryset': query_set,
+                                                           'a_ch': al_list,
+                                                           'ap_ch': ap_list,
+                                                           'len': len(query_set)})
+
     if is_valid(datetime_min):
         query_set = query_set.filter(dep_time__gte=datetime_min)
 
@@ -131,7 +138,10 @@ def create_flight(request):
         dep_time = pytz.UTC.localize(dep_time)
         arr_time = pytz.UTC.localize(arr_time)
 
-        if is_congested(dep_ap, dep_time):
+        if dep_ap == arr_ap:
+            messages.info(request, 'Select distinct connecting airports')
+
+        elif is_congested(dep_ap, dep_time):
             messages.info(request, 'Departure airport is too congested')
 
         elif is_congested(arr_ap, arr_time):
