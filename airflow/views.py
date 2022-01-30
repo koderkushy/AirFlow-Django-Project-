@@ -55,7 +55,7 @@ def flight_show(request):
     datetime_max = request.GET.get('datetime_max')
     airline = request.GET.get('airline')
 
-    if dep_ap == arr_ap:
+    if dep_ap == arr_ap and dep_ap is not None and dep_ap != '':
         messages.info(request, 'Select distinct connecting airports')
         return render(request, "flight/flight_form.html", {'queryset': query_set,
                                                            'a_ch': al_list,
